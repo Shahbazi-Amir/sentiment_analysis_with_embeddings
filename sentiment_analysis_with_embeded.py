@@ -116,3 +116,25 @@ print("\n📋 گزارش طبقه‌بندی:")
 print(classification_report(y_test, y_pred))
 
 
+from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
+import matplotlib.pyplot as plt
+
+# محاسبه ماتریس اشتباه
+cm = confusion_matrix(y_test, y_pred)
+
+# رسم ماتریس اشتباه
+disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=['Negative', 'Positive'])
+disp.plot(cmap='Blues')
+plt.title("Confusion Matrix")
+plt.show()
+
+from sklearn.model_selection import cross_val_score
+import numpy as np
+
+# اجرای 5-Fold Cross Validation
+cv_scores = cross_val_score(model, X_train, y_train, cv=5, scoring='accuracy')
+
+# چاپ نتایج
+print("🎯 دقت در هر Fold:")
+print(cv_scores)
+print(f"📌 میانگین دقت: {np.mean(cv_scores):.4f} ± {np.std(cv_scores):.4f}")
